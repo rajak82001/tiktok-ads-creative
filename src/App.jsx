@@ -32,6 +32,7 @@ function App() {
           <div className="container mx-auto px-4 max-w-4xl flex-1">
             <div className="relative mb-8">
               <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 text-center ">AdCreative Login App</h2>
+              <p className="text-center text-gray-600 text-sm mt-2">This application uses TikTok Login Kit for authentication.</p>
               {token && (
                 <button
                   onClick={logout}
