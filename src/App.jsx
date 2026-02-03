@@ -1,12 +1,10 @@
 import { useContext, useEffect, useState } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { AuthContext } from "./context/AuthContext";
 import { exchangeCodeForToken } from "./api/auth.api";
 import ConnectTikTok from "./components/ConnectTikTok";
 import AdForm from "./components/AdForm";
 import ErrorBanner from "./components/ErrorBanner";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import Terms from "./pages/Terms";
 
 function App() {
   const { token, login, logout } = useContext(AuthContext);
@@ -53,26 +51,24 @@ function App() {
             <div className="container mx-auto px-4 max-w-4xl text-center">
               <p className="text-gray-600 mb-4">© 2026 AdCreative Login App</p>
               <div className="flex justify-center gap-6 text-sm">
-                <Link 
-                  to="/privacy" 
+                <a 
+                  href="/adcreative-login-app/privacy.html" 
                   className="text-black hover:underline font-medium"
                 >
                   Privacy Policy
-                </Link>
+                </a>
                 <span className="text-gray-400">|</span>
-                <Link 
-                  to="/terms" 
+                <a 
+                  href="/adcreative-login-app/terms.html" 
                   className="text-black hover:underline font-medium"
                 >
                   Terms of Service
-                </Link>
+                </a>
               </div>
             </div>
           </div>
         </div>
       } />
-      <Route path="/privacy" element={<PrivacyPolicy />} />
-      <Route path="/terms" element={<Terms />} />
     </Routes>
   );
 }
