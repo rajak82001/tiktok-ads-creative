@@ -19,6 +19,7 @@ export default function TikTokCallback({ setGlobalError }) {
     //  User denied or TikTok returned an error
     if (errorParam) {
       setGlobalError(mapTikTokError(errorParam));
+      setGlobalError("Invalid login session. Please try again.");
       navigate("/");
       return;
     }
