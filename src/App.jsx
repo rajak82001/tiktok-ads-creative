@@ -27,7 +27,7 @@ function App() {
 
         {/* Step 2: TikTok OAuth callback */}
         <Route
-          path="/oauth/callback"
+          path="/auth/tiktok/callback"
           element={<OAuthCallback setGlobalError={setGlobalError} />}
         />
 

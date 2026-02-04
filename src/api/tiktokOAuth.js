@@ -5,7 +5,9 @@
 // Token exchange is mocked to demonstrate OAuth flow & thinking.
 
 const CLIENT_KEY = "awn2wg5bhdlljzqu";
-const REDIRECT_URI = "https://rajak82001.github.io/adcreative-login-app/tiktok/callback/";
+// const REDIRECT_URI = "https://rajak82001.github.io/adcreative-login-app/tiktok/callback/";
+const REDIRECT_URI = "https://rajak82001.github.io/auth/tiktok/callback/";
+
 
 export function redirectToTikTok() {
   const state = Math.random().toString(36).substring(2);
