@@ -3,11 +3,19 @@
   <head>
     <meta charset="utf-8" />
     <script>
-      var redirect =
-        "/adcreative-login-app" +
-        location.pathname +
-        location.search;
-      location.replace(redirect);
+      // GitHub Pages SPA fix for OAuth callback
+      var path = window.location.pathname;
+      var search = window.location.search;
+
+      // Remove duplicate repo name if present
+      if (path.startsWith("/adcreative-login-app/adcreative-login-app")) {
+        path = path.replace(
+          "/adcreative-login-app/adcreative-login-app",
+          "/adcreative-login-app"
+        );
+      }
+
+      window.location.replace(path + search);
     </script>
   </head>
   <body></body>
