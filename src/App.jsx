@@ -10,7 +10,7 @@ export default function App() {
   const [globalError, setGlobalError] = useState(null);
 
   return (
-    <HashRouter>
+    
       <Layout>
         {globalError && <ErrorBanner message={globalError} />}
 
@@ -27,6 +27,5 @@ export default function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Layout>
-    </HashRouter>
   );
 }
