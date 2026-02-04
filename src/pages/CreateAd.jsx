@@ -1,4 +1,4 @@
-// step - 4
+﻿// step - 4
 
 import { useState, useContext } from "react";
 import { useAdForm } from "../hooks/useAdForm";
@@ -6,7 +6,7 @@ import { validateForm } from "../utils/validators";
 import { submitAd } from "../api/ads.api";
 import { AuthContext } from "../context/AuthContext";
 import MusicSelector from "./MusicSelector";
-import ErrorBanner from "./ErrorBanner";
+import ErrorBanner from "../components/ErrorBanner";
 
 const AdForm = () => {
   const { token } = useContext(AuthContext);
