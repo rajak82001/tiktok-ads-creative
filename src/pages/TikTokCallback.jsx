@@ -1,4 +1,4 @@
-// step - 3 (OAuth Callback Handler)
+﻿// step - 3 (OAuth Callback Handler)
 
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -9,9 +9,24 @@ export default function TikTokCallback({ setGlobalError }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-
-
-    const params = new URLSearchParams(window.location.search);
+    // For HashRouter on GitHub Pages, query params are in the hash
+    // Format: /#/auth/tiktok/callback/?code=xyz&state=abc
+    
+    let params;
+    
+    // First try window.location.search (traditional routing)
+    if (window.location.search) {
+      params = new URLSearchParams(window.location.search);
+    } else {
+      // Fall back to parsing from hash for HashRouter
+      const hash = window.location.hash;
+      const searchIndex = hash.indexOf("?");
+      if (searchIndex !== -1) {
+        params = new URLSearchParams(hash.substring(searchIndex));
+      } else {
+        params = new URLSearchParams();
+      }
+    }
 
     const code = params.get("code");
     const errorParam = params.get("error");
@@ -23,9 +38,13 @@ export default function TikTokCallback({ setGlobalError }) {
       return;
     }
 
-    // If code missing, STOP but don't redirect immediately
+    // If code missing, STOP but don''t redirect immediately
     if (!code) {
-      console.warn("OAuth callback loaded without code");
+      console.warn("OAuth callback loaded without code", {
+        hash: window.location.hash,
+        search: window.location.search,
+        params: Object.fromEntries(params)
+      });
       return;
     }
 
@@ -43,5 +62,5 @@ export default function TikTokCallback({ setGlobalError }) {
     navigate("/create-ad");
   }, [navigate, setGlobalError]);
 
-  return <p>Connecting your TikTok account…</p>;
+  return <p>Connecting your TikTok account</p>;
 }
