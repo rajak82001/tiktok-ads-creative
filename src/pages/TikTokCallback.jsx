@@ -10,32 +10,24 @@ export default function TikTokCallback({ setGlobalError }) {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
+
     const code = params.get("code");
-    const state = params.get("state");
     const errorParam = params.get("error");
 
-    const savedState = localStorage.getItem("tt_state");
-
-    // TikTok returned an OAuth error (user denied, invalid scope, etc.)
+    // Only REAL TikTok error
     if (errorParam) {
       setGlobalError(mapTikTokError(errorParam));
       navigate("/");
       return;
     }
 
-    // No authorization code = login failed
+    // If code missing, STOP but don't redirect immediately
     if (!code) {
-      setGlobalError("Login failed. Please try again.");
-      navigate("/");
+      console.warn("OAuth callback loaded without code");
       return;
     }
 
-    // State mismatch (ignored for static hosting demo)
-    if (state !== savedState) {
-      console.warn("OAuth state mismatch (ignored for demo)");
-    }
-
-    // Mock token exchange (assignment scope)
+    // Mock exchange
     const data = exchangeCodeForTokenMock(code);
 
     if (data.error) {
@@ -44,7 +36,7 @@ export default function TikTokCallback({ setGlobalError }) {
       return;
     }
 
-    // Success
+    // SUCCESS
     localStorage.setItem("tt_access_token", data.access_token);
     navigate("/create-ad");
   }, [navigate, setGlobalError]);
