@@ -16,35 +16,26 @@ export default function TikTokCallback({ setGlobalError }) {
 
     const savedState = localStorage.getItem("tt_state");
 
-    //  User denied or TikTok returned an error
+    // TikTok returned an OAuth error (user denied, invalid scope, etc.)
     if (errorParam) {
       setGlobalError(mapTikTokError(errorParam));
-      setGlobalError("Invalid login session. Please try again.");
       navigate("/");
       return;
     }
 
-    //  CSRF / invalid session
-    // if (!code || state !== savedState) {
-    //   setGlobalError("Invalid login session. Please try again.");
-    //   navigate("/");
-    //   return;
-    // }
-
+    // No authorization code = login failed
     if (!code) {
       setGlobalError("Login failed. Please try again.");
       navigate("/");
       return;
     }
 
-    // NOTE:
-    // On static hosting (GitHub Pages), state may be lost on redirect.
-    // We log mismatch but do not block login for this demo.
+    // State mismatch (ignored for static hosting demo)
     if (state !== savedState) {
       console.warn("OAuth state mismatch (ignored for demo)");
     }
 
-    //  Mocked token exchange (assignment scope)
+    // Mock token exchange (assignment scope)
     const data = exchangeCodeForTokenMock(code);
 
     if (data.error) {
@@ -53,7 +44,7 @@ export default function TikTokCallback({ setGlobalError }) {
       return;
     }
 
-    //  Success
+    // Success
     localStorage.setItem("tt_access_token", data.access_token);
     navigate("/create-ad");
   }, [navigate, setGlobalError]);
