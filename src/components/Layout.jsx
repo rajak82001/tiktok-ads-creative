@@ -1,16 +1,17 @@
+﻿
 export default function Layout({ children }) {
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
       {/* Page Content */}
-      <div className="grow py-8">
-        <div className="container mx-auto px-4 max-w-4xl">
+      <div className="grow py-8 flex flex-col justify-center ">
+        <div className="container mx-auto px-4 max-w-4xl  ">
           {/* Header */}
-          <header className="mb-8 text-center">
+          {/* <header className="mb-8 text-center">
             <h1 className="text-2xl font-bold text-gray-800">
               AdCreative Login App
             </h1>
             <p className="text-gray-600 text-sm mt-2">Manage your TikTok Ads</p>
-          </header>
+          </header> */}
 
           {/* Main Content */}
           <main className="bg-white rounded-xl shadow-md p-6">{children}</main>
