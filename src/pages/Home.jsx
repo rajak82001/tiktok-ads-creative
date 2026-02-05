@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import ConnectTikTok from '../components/ConnectTikTok';
 import AdForm from '../components/AdForm';
 import { AuthContext } from '../context/AuthContext';
