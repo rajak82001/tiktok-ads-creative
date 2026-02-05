@@ -15,25 +15,25 @@ export default function CreateAd() {
     e.preventDefault();
     setError("");
 
-    // 1️⃣ Campaign name validation
+    // 1 Campaign name validation
     if (campaignName.length < 3) {
       setError("Campaign name must be at least 3 characters");
       return;
     }
 
-    // 2️⃣ Ad text validation
+    // 2 Ad text validation
     if (!adText || adText.length > 100) {
       setError("Ad text is required and must be under 100 characters");
       return;
     }
 
-    // 3️⃣ CTA validation
+    // 3 CTA validation
     if (!cta) {
       setError("CTA is required");
       return;
     }
 
-    // 4️⃣ Music rules
+    // 4 Music rules
     let finalMusicId = musicId;
 
     if (musicType === "none" && objective === "Conversions") {
@@ -52,7 +52,7 @@ export default function CreateAd() {
       finalMusicId = "mock_music_" + Date.now(); // fake upload
     }
 
-    // 5️⃣ Store in localStorage
+    // 5 Store in localStorage
     const adData = {
       campaignName,
       objective,
@@ -68,192 +68,154 @@ export default function CreateAd() {
   }
 
   return (
-    <div>
-      <h2>Create Ad</h2>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-2xl mx-auto">
+        <div className="bg-white rounded-2xl shadow-xl p-8">
+          <div className="mb-8">
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">Create Your Ad Campaign</h2>
+            <p className="text-gray-600">Build an engaging TikTok ad with our simple form</p>
+          </div>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+          {error && (
+            <div className="mb-6 p-4 bg-red-50 border-l-4 border-red-500 rounded-lg">
+              <p className="text-red-700 font-medium">{error}</p>
+            </div>
+          )}
 
-      <form onSubmit={handleSubmit}>
-        <input
-          placeholder="Campaign Name"
-          value={campaignName}
-          onChange={(e) => setCampaignName(e.target.value)}
-        />
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Campaign Name */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Campaign Name <span className="text-red-500">*</span>
+              </label>
+              <input
+                placeholder="e.g., Summer Sale 2025"
+                value={campaignName}
+                onChange={(e) => setCampaignName(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+              />
+              <p className="text-xs text-gray-500 mt-1">Minimum 3 characters</p>
+            </div>
 
-        <select
-          value={objective}
-          onChange={(e) => setObjective(e.target.value)}
-        >
-          <option>Traffic</option>
-          <option>Conversions</option>
-        </select>
+            {/* Objective */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Campaign Objective <span className="text-red-500">*</span>
+              </label>
+              <select
+                value={objective}
+                onChange={(e) => setObjective(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 bg-white"
+              >
+                <option>Traffic</option>
+                <option>Conversions</option>
+              </select>
+              <p className="text-xs text-gray-500 mt-1">Choose based on your marketing goal</p>
+            </div>
 
-        <textarea
-          placeholder="Ad Text (max 100 chars)"
-          maxLength={100}
-          value={adText}
-          onChange={(e) => setAdText(e.target.value)}
-        />
+            {/* Ad Text */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Ad Text <span className="text-red-500">*</span>
+              </label>
+              <textarea
+                placeholder="Write an engaging ad copy..."
+                maxLength={100}
+                value={adText}
+                onChange={(e) => setAdText(e.target.value)}
+                rows={4}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 resize-none"
+              />
+              <p className="text-xs text-gray-500 mt-1">{adText.length}/100 characters</p>
+            </div>
 
-        <input
-          placeholder="CTA"
-          value={cta}
-          onChange={(e) => setCta(e.target.value)}
-        />
+            {/* CTA */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Call-To-Action (CTA) <span className="text-red-500">*</span>
+              </label>
+              <input
+                placeholder="e.g., Shop Now, Learn More, Sign Up"
+                value={cta}
+                onChange={(e) => setCta(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+              />
+            </div>
 
-        <p>Music Option</p>
+            {/* Music Options */}
+            <div className="border-t pt-6">
+              <label className="block text-sm font-medium text-gray-700 mb-4">
+                Music Selection
+              </label>
 
-        <label>
-          <input
-            type="radio"
-            checked={musicType === "existing"}
-            onChange={() => setMusicType("existing")}
-          />
-          Existing Music ID
-        </label>
+              <div className="space-y-3">
+                <label className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-blue-50 cursor-pointer transition duration-200">
+                  <input
+                    type="radio"
+                    checked={musicType === "existing"}
+                    onChange={() => setMusicType("existing")}
+                    className="w-4 h-4 text-blue-600 cursor-pointer"
+                  />
+                  <span className="ml-3 text-gray-700 font-medium">Use Existing Music ID</span>
+                </label>
 
-        <label>
-          <input
-            type="radio"
-            checked={musicType === "upload"}
-            onChange={() => setMusicType("upload")}
-          />
-          Upload Music
-        </label>
+                <label className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-blue-50 cursor-pointer transition duration-200">
+                  <input
+                    type="radio"
+                    checked={musicType === "upload"}
+                    onChange={() => setMusicType("upload")}
+                    className="w-4 h-4 text-blue-600 cursor-pointer"
+                  />
+                  <span className="ml-3 text-gray-700 font-medium">Upload Your Music</span>
+                </label>
 
-        <label>
-          <input
-            type="radio"
-            checked={musicType === "none"}
-            onChange={() => setMusicType("none")}
-          />
-          No Music
-        </label>
+                <label className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-blue-50 cursor-pointer transition duration-200">
+                  <input
+                    type="radio"
+                    checked={musicType === "none"}
+                    onChange={() => setMusicType("none")}
+                    className="w-4 h-4 text-blue-600 cursor-pointer"
+                  />
+                  <span className="ml-3 text-gray-700 font-medium">No Music</span>
+                </label>
+              </div>
 
-        {musicType === "existing" && (
-          <input
-            placeholder="Music ID"
-            value={musicId}
-            onChange={(e) => setMusicId(e.target.value)}
-          />
-        )}
+              {musicType === "existing" && (
+                <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                  <input
+                    placeholder="Enter Music ID"
+                    value={musicId}
+                    onChange={(e) => setMusicId(e.target.value)}
+                    className="w-full px-4 py-2 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 bg-white"
+                  />
+                </div>
+              )}
 
-        {musicType === "upload" && <p>Uploading music...</p>}
+              {musicType === "upload" && (
+                <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                  <p className="text-green-700 font-medium"> Music upload feature ready</p>
+                </div>
+              )}
 
-        <button type="submit">Submit</button>
-      </form>
+              {objective === "Conversions" && musicType === "none" && (
+                <p className="text-xs text-orange-600 mt-2 font-medium"> Music is required for Conversion campaigns</p>
+              )}
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-3 rounded-lg hover:from-blue-700 hover:to-indigo-700 transition duration-300 transform hover:scale-105 shadow-lg mt-8"
+            >
+              Create Ad Campaign
+            </button>
+          </form>
+
+          <p className="text-xs text-gray-500 text-center mt-6">
+            Your ad campaign will be saved securely and ready to launch
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
-
-
-// import { useState, useContext } from "react";
-// import { useAdForm } from "../hooks/useAdForm";
-// import { validateForm } from "../utils/validators";
-// import { submitAd } from "../api/ads.api";
-// import { AuthContext } from "../context/AuthContext";
-// import MusicSelector from "./MusicSelector";
-// import ErrorBanner from "../components/ErrorBanner";
-
-// const AdForm = () => {
-//   const { token } = useContext(AuthContext);
-//   const { form, setForm } = useAdForm();
-//   const [errors, setErrors] = useState({});
-//   const [systemError, setSystemError] = useState("");
-
-//   const handleSubmit = async () => {
-//     // Ask for confirmation before submitting
-//     const confirmed = window.confirm("Are you sure you want to submit this ad?");
-//     if (!confirmed) return;
-
-//     const validationErrors = validateForm(form);
-//     if (Object.keys(validationErrors).length) {
-//       setErrors(validationErrors);
-//       return;
-//     }
-
-//     try {
-//       await submitAd(token, form);
-//       alert("Ad submitted successfully!");
-//     } catch (err) {
-//       setSystemError("Something went wrong. Please retry.");
-//     }
-//   };
-
-//   return (
-//     <div className="bg-white rounded-lg shadow-md p-6">
-//       {systemError && <ErrorBanner message={systemError} />}
-
-//       <div className="space-y-4">
-//         <div>
-//           <input
-//             type="text"
-//             placeholder="Campaign Name"
-//             value={form.campaignName}
-//             onChange={(e) =>
-//               setForm({ ...form, campaignName: e.target.value })
-//             }
-//             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-//           />
-//           {errors.campaignName && <p className="text-red-500 text-sm mt-1">{errors.campaignName}</p>}
-//         </div>
-
-//         <div>
-//           <select
-//             value={form.objective}
-//             onChange={(e) =>
-//               setForm({ ...form, objective: e.target.value })
-//             }
-//             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-//           >
-//             <option value="">Select Objective</option>
-//             <option value="Traffic">Traffic</option>
-//             <option value="Conversions">Conversions</option>
-//           </select>
-//         </div>
-
-//         <div>
-//           <textarea
-//             placeholder="Ad Text"
-//             value={form.adText}
-//             onChange={(e) =>
-//               setForm({ ...form, adText: e.target.value })
-//             }
-//             rows={4}
-//             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-//           />
-//           {errors.adText && <p className="text-red-500 text-sm mt-1">{errors.adText}</p>}
-//         </div>
-
-//         <div>
-//           <input
-//             type="text"
-//             placeholder="CTA"
-//             value={form.cta}
-//             onChange={(e) =>
-//               setForm({ ...form, cta: e.target.value })
-//             }
-//             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-//           />
-//           {errors.cta && <p className="text-red-500 text-sm mt-1">{errors.cta}</p>}
-//         </div>
-
-//         <MusicSelector
-//           form={form}
-//           setForm={setForm}
-//           objective={form.objective}
-//           setError={setSystemError}
-//         />
-
-//         <button
-//           onClick={handleSubmit}
-//           className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200"
-//         >
-//           Submit Ad
-//         </button>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default AdForm;
